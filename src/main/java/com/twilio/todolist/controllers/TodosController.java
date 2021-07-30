@@ -10,6 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Collections;
 import java.util.List;
 
@@ -23,8 +26,20 @@ public class TodosController {
         this.todoService = todoService;
     }
 
+    private void logIp() {
+        InetAddress localHost = null;
+        try {
+            localHost = Inet4Address.getLocalHost();
+        } catch (UnknownHostException e) {
+            log.error(e.getMessage(),e);
+        }
+        String ip = localHost.getHostAddress();
+        log.info("Hi!! im a pod and my ip is [{}]",ip);
+    }
+
     @GetMapping("/todos")
     public ResponseEntity<TodoResponse> getTodos(){
+        logIp();
         ResponseEntity<TodoResponse> response;
         try{
             log.info("Calling GET [/todos]");
@@ -42,6 +57,7 @@ public class TodosController {
 
     @GetMapping("/todos/{id}")
     public ResponseEntity<TodoResponse> getTodoById(@PathVariable Integer id) {
+        logIp();
         ResponseEntity<TodoResponse> response;
         try{
             log.info("Calling GET [/todos/{id}] with id [{}]", id);
@@ -59,6 +75,7 @@ public class TodosController {
 
     @PostMapping("/todos")
     public ResponseEntity<TodoResponse> createTodo(@RequestBody TodoRequest todoRequest) {
+        logIp();
         ResponseEntity<TodoResponse> response;
         try{
             log.info("Calling PUT [/todos] with todoRequest [{}]", todoRequest);
@@ -78,6 +95,7 @@ public class TodosController {
 
     @DeleteMapping("/todos/{id}")
     public ResponseEntity<TodoResponse> deleteTodo(@PathVariable Integer id) {
+        logIp();
         ResponseEntity<TodoResponse> response;
         try{
             log.info("Calling Delete [/todos/{id}] with id [{}]", id);
