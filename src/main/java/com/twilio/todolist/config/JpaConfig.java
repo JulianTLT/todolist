@@ -27,7 +27,7 @@ public class JpaConfig {
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/tododb");
+        dataSource.setUrl("jdbc:postgresql://postgres-host:5432/tododb");
         dataSource.setUsername("postgres");
         dataSource.setPassword("root");
         return dataSource;
